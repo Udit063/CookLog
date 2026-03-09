@@ -6,15 +6,33 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct CreateLog: View {
     @State private var title: String = ""
     @State private var description: String = ""
     @State private var steps: [String] = ["Step 1"]
+    @State private var selectedImage: UIImage?
+    @State private var selectedPhoto: PhotosPickerItem?
     
     var body: some View {
         NavigationView {
             Form {
+                Section(header: Text("Image")) {
+                    
+                    if let selectedImage {
+                        Image(uiImage: selectedImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 200)
+                            .cornerRadius(10)
+                    }
+                    
+                    PhotosPicker(selection: $selectedPhoto, matching: .images){
+                        Label("Select Iamge", systemImage: "photo")
+                    }
+                }
+                
                 Section(header: Text("Title")){
                     TextField("Title", text: $title)
                 }
@@ -28,11 +46,13 @@ struct CreateLog: View {
                         HStack {
                             TextField("Step \(index + 1)", text: $steps[index])
                             
-                            Button {
-                                steps.remove(at: index)
-                            } label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundStyle(.gray)
+                            if index > 0 {
+                                Button {
+                                    steps.remove(at: index)
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundStyle(.gray)
+                                }
                             }
                         }
                         
@@ -63,7 +83,14 @@ struct CreateLog: View {
                 }
                 
             }
-                .navigationTitle("Create Log")
+            .navigationTitle("Create Log")
+            .task(id: selectedPhoto){
+                if let data = try? await selectedPhoto?.loadTransferable(type: Data.self){
+                    if let uiImage = UIImage(data: data){
+                        selectedImage = uiImage
+                    }
+                }
+            }
         }
     }
 }
