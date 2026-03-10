@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
+struct LogListCard: View {
     let recipe: Recipe
     
     var body: some View {
@@ -25,11 +25,12 @@ struct SwiftUIView: View {
                 
                 Text(recipe.description)
                     .font(.body)
+                    .lineLimit(2)
             }
         }
     }
 }
 
 #Preview {
-    SwiftUIView(recipe: MockData.recipe)
+    LogListCard(recipe: MockData.recipe)
 }

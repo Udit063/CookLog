@@ -1,5 +1,5 @@
 //
-//  LogListView.swift
+//  FavoriteListView.swift
 //  CookLog
 //
 //  Created by rentamac on 3/10/26.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct LogListView: View {
+struct FavoriteListView: View {
     var body: some View {
         NavigationStack {
             List(MockData.recipes){ recipe in
                 LogListCard(recipe: recipe)
             }
-            .navigationTitle("Your Recipe List")
+            .navigationTitle("Favorites")
         }
     }
 }
 
 #Preview {
-    LogListView()
+    FavoriteListView()
 }

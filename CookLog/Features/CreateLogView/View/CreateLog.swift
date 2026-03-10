@@ -16,7 +16,7 @@ struct CreateLog: View {
     @State private var selectedPhoto: PhotosPickerItem?
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Image")) {
                     
