@@ -8,7 +8,7 @@
 import SwiftUI
 import PhotosUI
 
-struct CreateLog: View {
+struct CreateLogView: View {
     @State private var title: String = ""
     @State private var description: String = ""
     @State private var steps: [String] = ["Step 1"]
@@ -96,5 +96,5 @@ struct CreateLog: View {
 }
 
 #Preview {
-    CreateLog()
+    CreateLogView()
 }
