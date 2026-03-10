@@ -11,7 +11,11 @@ struct LogListView: View {
     var body: some View {
         NavigationStack {
             List(MockData.recipes){ recipe in
-                LogListCard(recipe: recipe)
+                NavigationLink{
+                    RecipeDetailView(recipe: recipe)
+                } label: {
+                    LogListCard(recipe: recipe)
+                }
             }
             .navigationTitle("Your Recipe List")
         }
