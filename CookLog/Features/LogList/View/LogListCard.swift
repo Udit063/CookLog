@@ -12,11 +12,14 @@ struct LogListCard: View {
     
     var body: some View {
         HStack(spacing: 10) {
-            Image(uiImage: UIImage(data: recipe.image!)!)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 90)
-                .cornerRadius(10)
+            if let data = recipe.image,
+               let uiImage = UIImage(data: data) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 90)
+                    .cornerRadius(10)
+            }
             
             VStack(alignment: .leading) {
                 Text(recipe.title ?? "")

@@ -20,6 +20,7 @@ class CoreDataManager {
         recipe.title = title
         recipe.descriptionText = description
         recipe.createdAt = Date()
+        recipe.isFavorite = false
         
         if let image = image {
             recipe.image = image.jpegData(compressionQuality: 0.8)
@@ -47,12 +48,30 @@ class CoreDataManager {
         }
     }
     
+    // Fetch Favorite Recipes
+    func fetchFavoriteRecipes() -> [Recipe] {
+        let request: NSFetchRequest<Recipe> = Recipe.fetchRequest()
+        request.predicate = NSPredicate(format: "isFavorite == true")
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        
+        do {
+            return try context.fetch(request)
+        } catch {
+            return []
+        }
+    }
+    
     // Delete recipe
     func deleteRecipe(_ recipe: Recipe) {
         context.delete(recipe)
         save()
     }
     
+    func toggleFavorite(recipe: Recipe) {
+        recipe.isFavorite.toggle()
+        save()
+    }
+        
     private func save() {
         do {
             try context.save()

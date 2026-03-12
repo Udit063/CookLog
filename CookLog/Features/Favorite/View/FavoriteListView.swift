@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct FavoriteListView: View {
+    @StateObject var viewModel = FavoriteListViewModel()
     var body: some View {
         NavigationStack {
-            List(MockData.recipes){ recipe in
+            List(viewModel.favoriteRecipes){ recipe in
                 NavigationLink{
-//                    RecipeDetailView(recipe: recipe)
+                    RecipeDetailView(recipe: recipe)
                 } label: {
-//                    LogListCard(recipe: recipe)
+                    LogListCard(recipe: recipe)
                     Text("helloo")
                 }
             }
             .navigationTitle("Favorites")
+            .onAppear {
+                viewModel.fetchFavoriteRecipes()
+            }
         }
     }
 }

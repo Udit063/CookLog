@@ -5,6 +5,7 @@
         <attribute name="descriptionText" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="steps" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Step" inverseName="recipe" inverseEntity="Step"/>
     </entity>

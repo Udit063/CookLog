@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    let recipe: Recipe
+    @ObservedObject var recipe: Recipe
     var body: some View {
         ScrollView {
             VStack(alignment: .leading){
-                Image(uiImage: UIImage(data: recipe.image!)!)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity, maxHeight: 600)
-                    .clipped()
+                if let data = recipe.image,
+                   let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: 600)
+                        .clipped()
+                }
                 
                 VStack(alignment: .leading, spacing: 10){
                     HStack{
@@ -27,13 +30,13 @@ struct RecipeDetailView: View {
                         Spacer()
                         
                         Button {
-                            
+                            CoreDataManager.shared.toggleFavorite(recipe: recipe)
                         } label: {
-                            Image(systemName: "heart")
+                            Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20)
-                                .foregroundColor(.primary)
+                                .foregroundColor(recipe.isFavorite ? .red : .gray)
                         }
                     }
                     
