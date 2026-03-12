@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Recipe: Identifiable {
+struct RecipeMock: Identifiable {
     let id = UUID()
     let name: String
     let image: String
@@ -16,7 +16,7 @@ struct Recipe: Identifiable {
 }
 
 struct MockData {
-    static let recipe = Recipe(
+    static let recipe = RecipeMock(
         name: "Fluffy Pancakes",
         image: "meat",
         description: "Soft and fluffy pancakes perfect for breakfast, served with maple syrup and butter.",
@@ -30,9 +30,9 @@ struct MockData {
         ]
     )
     
-    static let recipes: [Recipe] = [
+    static let recipes: [RecipeMock] = [
         
-        Recipe(
+        RecipeMock(
             name: "Spaghetti Pasta",
             image: "meat",
             description: "A classic Italian pasta dish made with rich tomato sauce, garlic, olive oil, and herbs.",
@@ -46,7 +46,7 @@ struct MockData {
             ]
         ),
         
-        Recipe(
+        RecipeMock(
             name: "Cheese Burger",
             image: "meat",
             description: "A juicy grilled burger patty topped with melted cheese, fresh lettuce, and tomatoes.",
@@ -60,7 +60,7 @@ struct MockData {
             ]
         ),
         
-        Recipe(
+        RecipeMock(
             name: "Pepperoni Pizza",
             image: "meat",
             description: "A crispy homemade pizza topped with mozzarella cheese and spicy pepperoni slices.",
@@ -74,7 +74,7 @@ struct MockData {
             ]
         ),
         
-        Recipe(
+        RecipeMock(
             name: "Healthy Salad",
             image: "meat",
             description: "A refreshing salad with mixed greens, cucumber, tomatoes, and a light olive oil dressing.",
@@ -88,7 +88,7 @@ struct MockData {
             ]
         ),
         
-        Recipe(
+        RecipeMock(
             name: "Fluffy Pancakes",
             image: "meat",
             description: "Soft and fluffy pancakes perfect for breakfast, served with maple syrup and butter.",

@@ -8,38 +8,54 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    let recipe: Recipe
+    @ObservedObject var recipe: Recipe
     var body: some View {
         ScrollView {
             VStack(alignment: .leading){
-                Image(recipe.image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity, maxHeight: 600)
-                    .clipped()
+                if let data = recipe.image,
+                   let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: 600)
+                        .clipped()
+                } else {
+                    Image("placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: 600)
+                        .clipped()
+                }
                 
                 VStack(alignment: .leading, spacing: 10){
                     HStack{
-                        Text(recipe.name)
+                        Text(recipe.title ?? "")
                             .font(.title)
                             .bold()
                         
                         Spacer()
                         
                         Button {
-                            
+                            CoreDataManager.shared.toggleFavorite(recipe: recipe)
                         } label: {
-                            Image(systemName: "heart")
+                            Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20)
-                                .foregroundColor(.primary)
+                                .foregroundColor(recipe.isFavorite ? .red : .gray)
                         }
                     }
                     
-                    Text(recipe.description)
+                    Text(recipe.descriptionText ?? "")
                         .font(.body)
                         .foregroundStyle(.secondary)
+                    
+                    if let date = recipe.createdAt {
+                        Text(date, style: .date)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .padding(.top, 10)
+                    }
                 }
                 .padding()
                 
@@ -50,14 +66,14 @@ struct RecipeDetailView: View {
                     .padding(.horizontal)
                     .padding(.top)
                 
-                VStack(alignment: .leading, spacing: 14) {
-                    ForEach(recipe.steps.indices, id: \.self){index in
-                        HStack(alignment: .top){
-                            Text("\(index+1).")
-                            Text("\(recipe.steps[index])")
-                        }
+                let stepsArray = (recipe.steps as? Set<Step> ?? [])
+                .sorted { $0.order < $1.order }
+                
+                ForEach(Array(stepsArray.enumerated()), id: \.element.id) { index, step in
+                    HStack(alignment: .top) {
+                        Text("\(index + 1).")
+                        Text(step.text ?? "")
                     }
-                    .listStyle(.inset)
                 }
                 .padding()
                 
@@ -66,6 +82,6 @@ struct RecipeDetailView: View {
     }
 }
 
-#Preview {
-    RecipeDetailView(recipe: MockData.recipe)
-}
+//#Preview {
+//    RecipeDetailView(recipe: MockData.recipe)
+//}
