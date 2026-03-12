@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    let recipe: Recipe
+    let recipe: RecipeMock
     var body: some View {
         ScrollView {
             VStack(alignment: .leading){

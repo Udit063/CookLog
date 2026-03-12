@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LogListCard: View {
-    let recipe: Recipe
+    let recipe: RecipeMock
     
     var body: some View {
         HStack(spacing: 10) {
