@@ -8,16 +8,26 @@
 import SwiftUI
 
 struct LogListView: View {
+    @StateObject var viewModel = LogListViewModel()
+    
     var body: some View {
         NavigationStack {
-            List(MockData.recipes){ recipe in
-                NavigationLink{
-                    RecipeDetailView(recipe: recipe)
-                } label: {
-                    LogListCard(recipe: recipe)
+            List{
+                ForEach(viewModel.recipes){ recipe in
+                    NavigationLink{
+                        RecipeDetailView(recipe: recipe)
+                    } label: {
+                        LogListCard(recipe: recipe)
+                    }
+                }
+                .onDelete { indexSet in
+                    viewModel.deleteRecipe(at: indexSet)
                 }
             }
             .navigationTitle("Your Recipe List")
+            .onAppear{
+                viewModel.loadRecipes()
+            }
         }
     }
 }

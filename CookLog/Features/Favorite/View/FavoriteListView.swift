@@ -12,9 +12,10 @@ struct FavoriteListView: View {
         NavigationStack {
             List(MockData.recipes){ recipe in
                 NavigationLink{
-                    RecipeDetailView(recipe: recipe)
+//                    RecipeDetailView(recipe: recipe)
                 } label: {
-                    LogListCard(recipe: recipe)
+//                    LogListCard(recipe: recipe)
+                    Text("helloo")
                 }
             }
             .navigationTitle("Favorites")
