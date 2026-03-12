@@ -19,6 +19,12 @@ struct RecipeDetailView: View {
                         .scaledToFit()
                         .frame(maxWidth: .infinity, maxHeight: 600)
                         .clipped()
+                } else {
+                    Image("placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: 600)
+                        .clipped()
                 }
                 
                 VStack(alignment: .leading, spacing: 10){

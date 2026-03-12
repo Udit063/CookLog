@@ -13,6 +13,13 @@ class CreateLogViewModel: ObservableObject{
     @Published var description: String = ""
     @Published var steps: [String] = ["Step 1"]
     @Published var selectedImage: UIImage?
+    @Published var isCreating: Bool = false
+    
+    var isFormValid: Bool {
+        !title.trimmingCharacters(in: .whitespaces).isEmpty &&
+        !description.trimmingCharacters(in: .whitespaces).isEmpty &&
+        !steps.contains(where: {$0.trimmingCharacters(in: .whitespaces).isEmpty})
+    }
     
     func createRecipe(
         title: String,
@@ -20,10 +27,23 @@ class CreateLogViewModel: ObservableObject{
         steps: [String],
         image: UIImage?
     ){
+        isCreating = true
+        
         CoreDataManager.shared.addRecipe(
             title: title,
             description: description,
             steps: steps,
             image: image)
+                
+        resetForm()
+        
+        isCreating = false
+    }
+    
+    func resetForm() {
+        title = ""
+        description = ""
+        steps = ["Step 1"]
+        selectedImage = nil
     }
 }

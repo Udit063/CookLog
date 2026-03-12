@@ -26,7 +26,7 @@ struct CreateLogView: View {
                     }
                     
                     PhotosPicker(selection: $selectedPhoto, matching: .images){
-                        Label("Select Iamge", systemImage: "photo")
+                        Label("Select Image", systemImage: "photo")
                     }
                 }
                 
@@ -66,11 +66,18 @@ struct CreateLogView: View {
                     Button {
                         viewModel.createRecipe(title: viewModel.title, description: viewModel.description, steps: viewModel.steps, image: viewModel.selectedImage)
                     } label: {
-                        Text("Create Log")
-                            .padding()
-                            .frame(maxWidth: .infinity)
+                        if viewModel.isCreating {
+                            ProgressView()
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                        } else {
+                            Text("Create Log")
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                        }
                     }
-                    .background(.blue)
+                    .disabled(!viewModel.isFormValid)
+                    .background(viewModel.isFormValid ? .blue : .gray)
                     .foregroundStyle(.white)
                     .clipShape(Capsule())
                     .frame(maxWidth: .infinity)

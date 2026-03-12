@@ -19,6 +19,12 @@ struct LogListCard: View {
                     .scaledToFit()
                     .frame(width: 90)
                     .cornerRadius(10)
+            } else {
+                Image("placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 90)
+                    .cornerRadius(10)
             }
             
             VStack(alignment: .leading) {
